@@ -1,0 +1,56 @@
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+Example 2:
+
+Input: head = [1], n = 1
+Output: []
+Example 3:
+
+Input: head = [1,2], n = 1
+Output: [1]
+ 
+
+Constraints:
+
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+ 
+
+Follow up: Could you do this in one pass?
+
+
+Approach:
+1)Since we need to remove nth node from,we can maintain two pointers at 'n' distance
+2)Fast and slow pointers
+3)First move the fast pointer from the start-->by n points
+4)If fast becomes null after pointing n steps forward,then return head->next (means there are exactly n nodes in the list)
+5)while(!fast->next)move fast and slow pointers parallely
+6)fast->next helps to stop one node before actual end of list,hence we will n+1 node prior to fast
+7)So,we can simply remove and add the slow->next = slow->next->next
+8)return head;
+
+Code:
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+    ListNode *slow=head,*fast=head;
+    while(n--)fast=fast->next;
+    if(!fast)return head->next;
+    while(fast->next){
+    slow=slow->next;
+    fast=fast->next;
+    }
+    slow->next=slow->next->next;
+    return head;
+    }
+};
