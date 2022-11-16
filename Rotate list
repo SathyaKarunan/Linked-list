@@ -1,0 +1,55 @@
+Given the head of a linked list, rotate the list to the right by k places.
+
+ 
+
+Example 1:
+
+
+Input: head = [1,2,3,4,5], k = 2
+Output: [4,5,1,2,3]
+Example 2:
+
+
+Input: head = [0,1,2], k = 4
+Output: [2,0,1]
+ 
+
+Constraints:
+
+The number of nodes in the list is in the range [0, 500].
+-100 <= Node.val <= 100
+0 <= k <= 2 * 109
+
+Approach;
+1)First of all,find the length of the list,also connect tail to head
+2)Then find k%length,In some case-k>length,this expression will validate that
+3)Then subtract k from length,this will help to point at a node which is k nodes away from tail
+
+Code:
+
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+    ListNode*prev,*ptr;
+    ptr=prev=head;
+    int count=0;
+    if(!head||!head->next||k==0)return head;
+    while(ptr->next){
+    ptr=ptr->next;
+    count++;
+    }
+    count++;
+    ptr->next=head;
+    
+   
+    k=k%count;
+    k=count-k;
+    while(k--){
+        ptr=ptr->next;
+    }
+    head=ptr->next;
+    ptr->next=NULL;
+    return head;
+    }
+        
+};
